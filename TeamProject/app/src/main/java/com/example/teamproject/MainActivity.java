@@ -37,5 +37,4 @@ public class MainActivity extends AppCompatActivity {
     }
     // first Test
     // second Test
-    // third Test
 }
