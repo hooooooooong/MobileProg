@@ -35,4 +35,5 @@ public class MainActivity extends AppCompatActivity {
         intent_Check.putExtra("type", 1);
         startActivity(intent_Check);
     }
+    // first Test
 }
