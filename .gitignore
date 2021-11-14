@@ -1,6 +1,6 @@
 
-# Created by https://www.toptal.com/developers/gitignore/api/android,androidstudio,java,windows
-# Edit at https://www.toptal.com/developers/gitignore?templates=android,androidstudio,java,windows
+# Created by https://www.toptal.com/developers/gitignore/api/android,androidstudio,java,windows,macos
+# Edit at https://www.toptal.com/developers/gitignore?templates=android,androidstudio,java,windows,macos
 
 ### Android ###
 # Built application files
@@ -123,6 +123,35 @@ output.json
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 
+### macOS ###
+# General
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Icon must end with two \r
+Icon
+
+
+# Thumbnails
+._*
+
+# Files that might appear in the root of a volume
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+
+# Directories potentially created on remote AFP share
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
+
 ### Windows ###
 # Windows thumbnail cache files
 Thumbs.db
@@ -219,11 +248,7 @@ obj/
 .idea/uiDesigner.xml
 
 # OS-specific files
-.DS_Store
 .DS_Store?
-._*
-.Spotlight-V100
-.Trashes
 
 # Legacy Eclipse project files
 .classpath
@@ -258,4 +283,4 @@ fabric.properties
 
 !/gradle/wrapper/gradle-wrapper.jar
 
-# End of https://www.toptal.com/developers/gitignore/api/android,androidstudio,java,windows
+# End of https://www.toptal.com/developers/gitignore/api/android,androidstudio,java,windows,macos
