@@ -42,31 +42,29 @@ public class PictureActivity extends AppCompatActivity {
 
     public void ShowImage(String type){
         ImageView picture = findViewById(R.id.img);
-        switch(type){
-/*            case "Seoul":
-                picture.setImageResource(R.drawable.middle_jeju);
-                break;
-            case "Gyeonggi":
-                picture.setImageResource(R.drawable.middle_jeju);
-                break;
-            case "Chungcheong":
-                picture.setImageResource(R.drawable.middle_jeju);
-                break;
-            case "Gangwon":
-                picture.setImageResource(R.drawable.middle_jeju);
-                break;*/
-            case "Jeolla":
-                picture.setImageResource(R.drawable.pinkmuhly);
-                break;
-            case "Jeju":
-                picture.setImageResource(R.drawable.middle_jeju);
-                break;
-            case "Gyeongsang":
-                picture.setImageResource(R.drawable.hillofthewind);
-                break;
-            case "ETC": //이미지 바꿔야함
-                picture.setImageResource(R.drawable.dokdo);
-                break;
+        if(type.equals("Seoul")){
+            picture.setImageResource(R.drawable.seoul);
+        }
+        else if(type.equals("Gyeonggi")){
+            picture.setImageResource(R.drawable.seoul);
+        }
+        else if(type.equals("Chungcheong")){
+            picture.setImageResource(R.drawable.seoul);
+        }
+        else if(type.equals("Gangwon")){
+            picture.setImageResource(R.drawable.seoul);
+        }
+        else if(type.equals("Jeolla")){
+            picture.setImageResource(R.drawable.pinkmuhly);
+        }
+        else if(type.equals("Jeju")){
+            picture.setImageResource(R.drawable.middle_jeju);
+        }
+        else if(type.equals("Gyeongsang")){
+            picture.setImageResource(R.drawable.hillofthewind);
+        }
+        else if(type.equals("ETC")){
+            picture.setImageResource(R.drawable.dokdo);
         }
     }
 }
