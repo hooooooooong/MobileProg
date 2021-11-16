@@ -13,6 +13,9 @@ import android.widget.Toast;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 public class PictureActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,18 +44,21 @@ public class PictureActivity extends AppCompatActivity {
     }
 
     public void ShowImage(String type){
+
+        ArrayList<String> destinations = new ArrayList<>();
+
         ImageView picture = findViewById(R.id.img);
         if(type.equals("Seoul")){
             picture.setImageResource(R.drawable.seoul);
         }
         else if(type.equals("Gyeonggi")){
-            picture.setImageResource(R.drawable.seoul);
+            picture.setImageResource(R.drawable.gyeonggi);
         }
         else if(type.equals("Chungcheong")){
-            picture.setImageResource(R.drawable.seoul);
+            picture.setImageResource(R.drawable.chungcheong);
         }
         else if(type.equals("Gangwon")){
-            picture.setImageResource(R.drawable.seoul);
+            picture.setImageResource(R.drawable.gangwon);
         }
         else if(type.equals("Jeolla")){
             picture.setImageResource(R.drawable.pinkmuhly);
