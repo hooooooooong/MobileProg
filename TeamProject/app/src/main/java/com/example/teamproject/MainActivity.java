@@ -18,23 +18,16 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
     }
 
-    public void onClick(View view){
+    public void RegionClick(View view){
+        String name = view.getResources().getResourceEntryName(view.getId());
         Intent intent = new Intent(MainActivity.this, PictureActivity.class);
-        intent.putExtra("type", "Mountain");
+        intent.putExtra("type", name); //이름 전달
         startActivity(intent);
     }
 
-    public void JJonClick(View view){
-        Intent intent_JJ = new Intent(MainActivity.this, PictureActivity.class);
-        intent_JJ.putExtra("type", "Jeju");
-        startActivity(intent_JJ);
-    }
-
     public void CheckOnClick(View view){
-        Intent intent_Check = new Intent(MainActivity.this, InfoActivity.class);
-        intent_Check.putExtra("type", 1);
+        Intent intent_Check = new Intent(MainActivity.this, CheckListActivity.class);
+        intent_Check.putExtra("type", "check");
         startActivity(intent_Check);
     }
-    // first Test
-    // second Test
 }
