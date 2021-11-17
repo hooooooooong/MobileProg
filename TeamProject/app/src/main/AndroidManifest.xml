@@ -10,8 +10,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.TeamProject">
         <activity
-            android:name=".MainActivity"
-            android:label="Safe Trip"
+            android:name=".LoginActivity"
+            android:label="Login"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -30,6 +30,17 @@
             android:name=".CheckListActivity"
             android:label="Check List">
         </activity>
+        <activity
+            android:name=".MainActivity"
+            android:label="Safe Trip">
+        </activity>
+        <activity
+            android:name=".SignupActivity"
+            android:label="login">
+        </activity>
+
+
     </application>
 
+    <uses-permission android:name="android.permission.INTERNET" />
 </manifest>
