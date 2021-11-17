@@ -1,9 +1,12 @@
 package com.example.teamproject;
 
+import static android.content.ContentValues.TAG;
+
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -86,13 +89,13 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
                             startActivity(new Intent(getApplicationContext(), MainActivity.class));
                         } else {
                             //에러발생시
-                            textviewMessage.setText("에러유형\n - 이미 등록된 이메일  \n -암호 최소 6자리 이상 \n - 서버에러");
+                            textviewMessage.setText("에러유형\n - 이미 등록된 이메일  \n - 암호 최소 6자리 이상 \n - 서버에러");
+                            Log.w(TAG, "createUserWithEmail:failure", task.getException());
                             Toast.makeText(SignupActivity.this, "등록 에러!", Toast.LENGTH_SHORT).show();
                         }
                         progressDialog.dismiss();
                     }
                 });
-
     }
 
     //button click event
@@ -108,5 +111,4 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
             startActivity(new Intent(this, LoginActivity.class)); //추가해 줄 로그인 액티비티
         }
     }
-
 }

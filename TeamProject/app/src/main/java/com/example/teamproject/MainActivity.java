@@ -10,8 +10,11 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity {
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
+public class MainActivity extends AppCompatActivity {
+    //private FirebaseAuth mAuth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,5 +32,12 @@ public class MainActivity extends AppCompatActivity {
         Intent intent_Check = new Intent(MainActivity.this, CheckListActivity.class);
         intent_Check.putExtra("type", "check");
         startActivity(intent_Check);
+    }
+
+    public void onClick(View view){
+        FirebaseAuth.getInstance().signOut();
+        finish();
+        Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+        startActivity(intent);
     }
 }
