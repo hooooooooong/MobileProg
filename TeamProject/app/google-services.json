@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "159318700509",
+    "project_id": "safe-trip-b903a",
+    "storage_bucket": "safe-trip-b903a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:159318700509:android:b34ab342b4b56aabf88634",
+        "android_client_info": {
+          "package_name": "com.example.teamproject"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "159318700509-35do3jigbm0k1q2685ij1j71cs4b1vfe.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.teamproject",
+            "certificate_hash": "58f946bbb9ec020d72269037246b6b6693de4b12"
+          }
+        },
+        {
+          "client_id": "159318700509-8srg8lgtsapusg0blqh2jnaf87b8o7lg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDDY8lzgIKM1mAzVV37slgY7xDSpxxhU6k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "159318700509-8srg8lgtsapusg0blqh2jnaf87b8o7lg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
