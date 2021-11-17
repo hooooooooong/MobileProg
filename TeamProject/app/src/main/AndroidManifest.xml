@@ -38,6 +38,10 @@
             android:name=".SignupActivity"
             android:label="Sign Up">
         </activity>
+        <activity
+            android:name=".FindActivity"
+            android:label="Find PassWord">
+        </activity>
 
     </application>
 </manifest>
