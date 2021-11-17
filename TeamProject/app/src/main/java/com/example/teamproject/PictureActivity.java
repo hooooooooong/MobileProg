@@ -34,7 +34,7 @@ public class PictureActivity extends AppCompatActivity {
         Animation animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.translate);
         arrow.startAnimation(animation);
 
-        arrow.setOnClickListener(new View.OnClickListener(){ //세 번째 포스터가 클릭 되었을 때
+        arrow.setOnClickListener(new View.OnClickListener(){
             public void onClick(View view){
                 Intent intent = new Intent(PictureActivity.this, InfoActivity.class); //전환할 액티비티
                 intent.putExtra("region", type);
