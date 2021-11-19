@@ -27,6 +27,7 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
     //define view objects
     EditText editTextEmail;
     EditText editTextPassword;
+    EditText editTextPassword2;
     Button buttonSignup;
     TextView textviewSignin;
     TextView textviewMessage;
@@ -51,6 +52,7 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
         //initializing views
         editTextEmail = (EditText) findViewById(R.id.editTextEmail);
         editTextPassword = (EditText) findViewById(R.id.editTextPassword);
+        editTextPassword2 = (EditText) findViewById(R.id.editTextPassword2);
         textviewSignin= (TextView) findViewById(R.id.textViewSignin);
         textviewMessage = (TextView) findViewById(R.id.textviewMessage);
         buttonSignup = (Button) findViewById(R.id.buttonSignup);
@@ -63,9 +65,11 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
 
     //Firebse creating a new user
     private void registerUser(){
-        //사용자가 입력하는 email, password를 가져온다.
+        //사용자가 입력하는 email, password, 재입력한 password를 가져온다.
         String email = editTextEmail.getText().toString().trim();
         String password = editTextPassword.getText().toString().trim();
+        String password2 = editTextPassword2.getText().toString().trim();
+
         //email과 password가 비었는지 아닌지를 체크 한다.
         if(TextUtils.isEmpty(email)){
             Toast.makeText(this, "Email을 입력해 주세요.", Toast.LENGTH_SHORT).show();
@@ -73,8 +77,12 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
         }
         if(TextUtils.isEmpty(password)){
             Toast.makeText(this, "Password를 입력해 주세요.", Toast.LENGTH_SHORT).show();
+            return;
         }
-
+        if(!password.equals(password2)){
+            Toast.makeText(this, "Password가 일치하지 않습니다.", Toast.LENGTH_SHORT).show();
+            return;
+        }
         //email과 password가 제대로 입력되어 있다면 계속 진행된다.
         progressDialog.setMessage("등록중입니다. 기다려 주세요...");
         progressDialog.show();
@@ -89,7 +97,7 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
                             startActivity(new Intent(getApplicationContext(), MainActivity.class));
                         } else {
                             //에러발생시
-                            textviewMessage.setText("에러유형\n - 이미 등록된 이메일  \n - 암호 최소 6자리 이상 \n - 서버에러");
+                            textviewMessage.setText("에러유형\n - 이미 등록된 이메일  \n - 암호 최소 6자리 이상  \n - 서버에러");
                             Log.w(TAG, "createUserWithEmail:failure", task.getException());
                             Toast.makeText(SignupActivity.this, "등록 에러!", Toast.LENGTH_SHORT).show();
                         }

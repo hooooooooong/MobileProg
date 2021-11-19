@@ -28,14 +28,12 @@ public class CheckListActivity extends AppCompatActivity {
         AdapterView.OnItemClickListener a = new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Toast.makeText(getApplicationContext(), adapter.getItem(i), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getApplicationContext(), adapter.getItem(i), Toast.LENGTH_SHORT).show();
                 checkListView.onSaveInstanceState();
             }
         };
-
         checkListView.setOnItemClickListener(a);
     }
-
 
     public void CheckList(){
         String[] checkList = {"결제 수단", "카메라", "보조배터리", "상비약", "멀티어댑터", "티슈", "옷",
