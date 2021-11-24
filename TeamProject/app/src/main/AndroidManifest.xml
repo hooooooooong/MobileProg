@@ -31,6 +31,10 @@
             android:label="Check List">
         </activity>
         <activity
+            android:name=".CalendarActivity"
+            android:label="Calendar">
+        </activity>
+        <activity
             android:name=".MainActivity"
             android:label="Safe Trip">
         </activity>

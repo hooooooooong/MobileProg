@@ -34,6 +34,11 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent_Check);
     }
 
+    public void CalOnClick(View view){
+        Intent intent_Cal = new Intent(MainActivity.this, CalendarActivity.class);
+        startActivity(intent_Cal);
+    }
+
     public void onClick(View view){
         FirebaseAuth.getInstance().signOut();
         finish();
