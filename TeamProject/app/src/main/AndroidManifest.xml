@@ -47,8 +47,7 @@
             android:label="Find PassWord">
         </activity>
         <activity
-            android:name=".FindActivity"
-            android:label="Find PassWord">
+            android:name=".RegionInfoActivity">
         </activity>
 
     </application>
