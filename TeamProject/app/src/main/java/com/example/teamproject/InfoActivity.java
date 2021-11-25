@@ -3,6 +3,8 @@ package com.example.teamproject;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -25,7 +27,7 @@ public class InfoActivity extends AppCompatActivity{
     }
 
     public void RegionList(String region){
-        ListView regionListView;
+        ListView regionListView = findViewById(R.id.regionListView);
         ArrayAdapter<String> adapter;
         ArrayList<String> destinations = new ArrayList<>();
 
@@ -55,7 +57,15 @@ public class InfoActivity extends AppCompatActivity{
         }
 
         adapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_list_item_1, destinations);
-        regionListView = findViewById(R.id.regionListView);
         regionListView.setAdapter(adapter);
+
+        regionListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(InfoActivity.this, RegionInfoActivity.class);
+                intent.putExtra("name", adapter.getItem(position));
+                startActivity(intent);
+            }
+        });
    }
 }
