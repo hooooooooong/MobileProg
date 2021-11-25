@@ -42,6 +42,10 @@
             android:name=".FindActivity"
             android:label="Find PassWord">
         </activity>
+        <activity
+            android:name=".FindActivity"
+            android:label="Find PassWord">
+        </activity>
 
     </application>
 </manifest>
