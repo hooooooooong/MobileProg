@@ -10,8 +10,11 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity {
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
+public class MainActivity extends AppCompatActivity {
+    //private FirebaseAuth mAuth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,4 +33,18 @@ public class MainActivity extends AppCompatActivity {
         intent_Check.putExtra("type", "check");
         startActivity(intent_Check);
     }
+
+    public void CalOnClick(View view){
+        Intent intent_Cal = new Intent(MainActivity.this, CalendarActivity.class);
+        startActivity(intent_Cal);
+    }
+
+    public void onClick(View view){
+        FirebaseAuth.getInstance().signOut();
+        finish();
+        Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+        startActivity(intent);
+    }
+
+    // Test
 }
