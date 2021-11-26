@@ -46,6 +46,15 @@ public class RegionInfoActivity extends AppCompatActivity {
                 if(urlIntent.resolveActivity(getPackageManager()) != null) startActivity(urlIntent);
             }
         });
+
+        TextView morePictures = findViewById(R.id.morePictures);
+        morePictures.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent gridLayoutIntent = new Intent(getApplicationContext() , GridLayoutActivity.class);
+                startActivity(gridLayoutIntent);
+            }
+        });
     }
 
     @SuppressLint("SetTextI18n")

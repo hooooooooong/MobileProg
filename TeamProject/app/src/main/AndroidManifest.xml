@@ -49,6 +49,15 @@
         <activity
             android:name=".RegionInfoActivity">
         </activity>
+        <activity
+            android:name=".GridLayoutActivity"
+            android:label="Gallery">
+
+        </activity>
+        <activity
+            android:name=".FullImageActivity"
+            android:label="FullImage">
+        </activity>
 
     </application>
 </manifest>
