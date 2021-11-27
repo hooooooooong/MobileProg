@@ -33,8 +33,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
 
+        setContentView(R.layout.activity_login);
         //initializig firebase auth object
         firebaseAuth = FirebaseAuth.getInstance();
 
@@ -60,15 +60,15 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     //firebase userLogin method
-    private void userLogin(){
+    private void userLogin() {
         String email = editTextEmail.getText().toString().trim();
         String password = editTextPassword.getText().toString().trim();
 
-        if(TextUtils.isEmpty(email)){
+        if (TextUtils.isEmpty(email)) {
             Toast.makeText(this, "email을 입력해 주세요.", Toast.LENGTH_SHORT).show();
             return;
         }
-        if(TextUtils.isEmpty(password)){
+        if (TextUtils.isEmpty(password)) {
             Toast.makeText(this, "password를 입력해 주세요.", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -82,18 +82,16 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         progressDialog.dismiss();
-                        if(task.isSuccessful()) {
+                        if (task.isSuccessful()) {
                             finish();
                             startActivity(new Intent(getApplicationContext(), MainActivity.class));
                         } else {
                             Toast.makeText(getApplicationContext(), "로그인 실패!", Toast.LENGTH_LONG).show();
-                            textviewMessage.setText("로그인 실패 유형\n - password가 맞지 않습니다.\n -서버에러");
+                            textviewMessage.setText(" 로그인 실패 유형\n - password가 맞지 않습니다.\n - 서버에러");
                         }
                     }
                 });
     }
-
-
 
     @Override
     public void onClick(View view) {
@@ -101,12 +99,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             userLogin();
         }
         if(view == textviewSignup) {
-            finish();
             startActivity(new Intent(this, SignupActivity.class));
         }
         if(view == textviewFindPassword) {
-            finish();
-            //startActivity(new Intent(this, FindActivity.class));
+            startActivity(new Intent(this, FindActivity.class));
         }
     }
 }

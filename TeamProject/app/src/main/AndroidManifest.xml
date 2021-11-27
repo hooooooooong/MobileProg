@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.teamproject">
-
+    <uses-permission android:name="android.permission.INTERNET"/>
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -11,7 +11,7 @@
         android:theme="@style/Theme.TeamProject">
         <activity
             android:name=".LoginActivity"
-            android:label="Login"
+            android:label="Safe Trip"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -31,16 +31,33 @@
             android:label="Check List">
         </activity>
         <activity
+            android:name=".CalendarActivity"
+            android:label="Calendar">
+        </activity>
+        <activity
             android:name=".MainActivity"
             android:label="Safe Trip">
         </activity>
         <activity
             android:name=".SignupActivity"
-            android:label="login">
+            android:label="Sign Up">
+        </activity>
+        <activity
+            android:name=".FindActivity"
+            android:label="Find PassWord">
+        </activity>
+        <activity
+            android:name=".RegionInfoActivity">
+        </activity>
+        <activity
+            android:name=".GridLayoutActivity"
+            android:label="Gallery">
+
+        </activity>
+        <activity
+            android:name=".FullImageActivity"
+            android:label="FullImage">
         </activity>
 
-
     </application>
-
-    <uses-permission android:name="android.permission.INTERNET" />
 </manifest>
