@@ -87,7 +87,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             startActivity(new Intent(getApplicationContext(), MainActivity.class));
                         } else {
                             Toast.makeText(getApplicationContext(), "로그인 실패!", Toast.LENGTH_LONG).show();
-                            textviewMessage.setText("로그인 실패 유형\n - password가 맞지 않습니다.\n - 서버에러");
+                            textviewMessage.setText(" 로그인 실패 유형\n - password가 맞지 않습니다.\n - 서버에러");
                         }
                     }
                 });
@@ -99,11 +99,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             userLogin();
         }
         if(view == textviewSignup) {
-            finish();
             startActivity(new Intent(this, SignupActivity.class));
         }
         if(view == textviewFindPassword) {
-            finish();
             startActivity(new Intent(this, FindActivity.class));
         }
     }

@@ -42,6 +42,22 @@
             android:name=".SignupActivity"
             android:label="Sign Up">
         </activity>
+        <activity
+            android:name=".FindActivity"
+            android:label="Find PassWord">
+        </activity>
+        <activity
+            android:name=".RegionInfoActivity">
+        </activity>
+        <activity
+            android:name=".GridLayoutActivity"
+            android:label="Gallery">
+
+        </activity>
+        <activity
+            android:name=".FullImageActivity"
+            android:label="FullImage">
+        </activity>
 
     </application>
 </manifest>
