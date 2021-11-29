@@ -39,6 +39,7 @@ public class PictureActivity extends AppCompatActivity {
                 Intent intent = new Intent(PictureActivity.this, InfoActivity.class); //전환할 액티비티
                 intent.putExtra("region", type);
                 startActivity(intent); //액티비티 전환
+                finish();
             }
         });
     }
