@@ -10,11 +10,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 public class CalendarAdapterActivity extends RecyclerView.Adapter<CalendarViewHolderActivity> {
+
     private final ArrayList<String> daysOfMonth;
     private final OnItemListener onItemListener;
 
-    public CalendarAdapterActivity(ArrayList<String> daysOfMonth, OnItemListener onItemListener)
-    {
+    public CalendarAdapterActivity(ArrayList<String> daysOfMonth, OnItemListener onItemListener) {
         this.daysOfMonth = daysOfMonth;
         this.onItemListener = onItemListener;
     }
@@ -23,7 +23,7 @@ public class CalendarAdapterActivity extends RecyclerView.Adapter<CalendarViewHo
     @Override
     public CalendarViewHolderActivity onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        View view = inflater.inflate(R.layout.activity_calender_cell, parent, false);
+        View view = inflater.inflate(R.layout.activity_calendarcell, parent, false);
         ViewGroup.LayoutParams layoutParams = view.getLayoutParams();
         layoutParams.height = (int) (parent.getHeight() * 0.166666666);
         return new CalendarViewHolderActivity(view, onItemListener);
