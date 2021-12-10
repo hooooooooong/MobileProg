@@ -9,7 +9,7 @@
         android:id="@+id/Name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="20dp"
         android:text="Name"
         android:textAlignment="center"
         android:textSize="35sp"

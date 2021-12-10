@@ -38,7 +38,7 @@ public class InfoActivity extends AppCompatActivity{
             destinations.addAll(Arrays.asList("대부도 바다향기 수목원", "평강랜드", "물의정원"));
         }
         else if(region.equals("Chungcheong")){
-            destinations.addAll(Arrays.asList("구담봉", "옥순봉", "단양강 잔도", "제천 의림지와 제림", "예당호", "태안 빛축제"));
+            destinations.addAll(Arrays.asList("구담봉", "옥순봉", "단양강 잔도", "제천 의림지와 제림", "예당호 출렁다리", "태안 빛축제"));
         }
         else if(region.equals("Gangwon")){
             destinations.addAll(Arrays.asList("원대리 자작나무 숲", "곰배령", "상도문 돌담마을"));

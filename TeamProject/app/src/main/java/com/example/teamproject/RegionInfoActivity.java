@@ -59,9 +59,18 @@ public class RegionInfoActivity extends AppCompatActivity {
         urls.put("서울숲", "https://www.youtube.com/watch?v=fTrdYm_h-3Q");
         urls.put("하늘공원", "https://www.youtube.com/watch?v=r-yZuLO80xw");
         urls.put("낙산공원", "https://www.youtube.com/watch?v=t0z4dPgiiU8");
+
         urls.put("대부도 바다향기 수목원", "https://www.youtube.com/watch?v=75Kwscgnk08");
         urls.put("평강랜드", "https://www.youtube.com/watch?v=RHnZvMxx3i8");
         urls.put("물의정원", "https://www.youtube.com/watch?v=e0yoAjvV2mg");
+
+        urls.put("구담봉", "https://www.youtube.com/watch?v=0XjdXSESy-w");
+        urls.put("옥순봉", "https://www.youtube.com/watch?v=oJRjhgOZGtY");
+        urls.put("단양강 잔도", "https://www.youtube.com/watch?v=oJF1mrIvPDQ");
+        urls.put("제천 의림지와 제림", "https://www.youtube.com/watch?v=QlDCkdrK1GA");
+        urls.put("예당호 출렁다리", "https://www.youtube.com/watch?v=ZatPegMr-xk");
+        urls.put("태안 빛축제", "https://www.youtube.com/watch?v=Vsue18ClBGw");
+        
         urls.put("원대리 자작나무 숲", "https://www.youtube.com/watch?v=VWoPSbVl-nA");
         urls.put("곰배령", "https://www.youtube.com/watch?v=-jOeYIvVHxs");
         urls.put("상도문 돌담마을", "https://www.youtube.com/watch?v=rekQ_XMCUxM");
@@ -106,17 +115,17 @@ public class RegionInfoActivity extends AppCompatActivity {
     @SuppressLint("SetTextI18n")
     public void setTextGyeongGi(String name){
         if(name.equals("대부도 바다향기 수목원")){
-            desc.setText("면적은 총 30만평(101만㎡)이며, \n" +
+            desc.setText("면적은 총 30만평(101만㎡)이며\n" +
                     "수려한 서해안 경관을 전망할 수 있는\n" +
                     "'상상전망대'를 비롯한 바다너울원, 암석원, 장미원 등\n" +
-                    "특색있는 여러 주제원은 물론,\n" +
+                    "특색있는 여러 주제원은 물론\n" +
                     "백합쉼터와 소공연장 등 다양한 휴양공간이 마련되어 있다.");
 
             sampleImg01.setImageResource(R.drawable.oceanscent01);
             sampleImg02.setImageResource(R.drawable.oceanscent02);
         }
         if(name.equals("평강랜드")){
-            desc.setText("평강랜드는 13개 테마 정원,\n" +
+            desc.setText("평강랜드는 13개 테마 정원과\n" +
                     "국내 최초 암석원을 보유한 평강식물원과\n" +
                     "북유럽풍 아이들 놀이터 어드벤처 파크 등\n" +
                     "체험교육이 함께운영되고 있다.");
@@ -141,8 +150,8 @@ public class RegionInfoActivity extends AppCompatActivity {
         if(name.equals("구담봉")){
             desc.setText("단양팔경에 속하는 산으로 \n" +
                     "물 속에 비친 바위가 거북 무늬를 띠고 있어 붙여진 이름이다.\n" +
-                    "높이는 330m이며 명승 제 46호로 지정되었다\n" +
-                    "충주시에서 단양읍을 향해 가다 보면 \n" +
+                    "높이는 330m이며 명승 제 46호로 지정되었다.\n" +
+                    "충주시에서 단양읍을 향해 가다 보면\n" +
                     "거북 한 마리가 뭍으로 올라가는 듯한 형상의 이 산이 보인다.");
 
             sampleImg01.setImageResource(R.drawable.goodam01);
@@ -160,13 +169,44 @@ public class RegionInfoActivity extends AppCompatActivity {
         }
         if(name.equals("단양강 잔도")){
             desc.setText("총 길이 1.2km의 단양강 잔도길에는\n" +
-                    "그동안 접근하기 어려웠던 남한강 암벽을 따라 \n" +
+                    "그동안 접근하기 어려웠던 남한강 암벽을 따라\n" +
                     "잔도가 있어 트래킹의 낭만과 짜릿한 스릴을\n" +
                     "야간관광 100선에 선정되어\n" +
-                    "단양군을 체류형 관광도시로 이끌고 있는 곳이다.\n");
+                    "단양군을 체류형 관광도시로 이끌고 있는 곳이다.");
 
             sampleImg01.setImageResource(R.drawable.jando01);
             sampleImg02.setImageResource(R.drawable.jando02);
+        }
+        if(name.equals("제천 의림지와 제림")){
+            desc.setText("의림지는 우리나라의 대표적인 수리시설 중의 하나로\n" +
+                    "삼한시대부터 있었던 것으로 알려져 있다.\n" +
+                    "신라 진흥왕 때 악성 우륵이 개울물을 막아\n" +
+                    "개울물을 막아 둑을 쌓았다는 이야기가 전하고\n" +
+                    "그로부터 700년 뒤 이곳에 온 현감 박의림이\n" +
+                    "좀더 견고하게 새로 쌓은 것이라고도 한다.");
+
+            sampleImg01.setImageResource(R.drawable.uirimji01);
+            sampleImg02.setImageResource(R.drawable.uirimji02);
+        }
+        if(name.equals("예당호 출렁다리")){
+            desc.setText("우리나라에서 가장 큰 저수지인 예당호에 위치한\n" +
+                    "우리나라에서 가장 긴 출렁다리로\n" +
+                    "성인 3150을 동시에 수용할 수 있다.\n" +
+                    "하늘로 곧게 솟은 64m 주탑을 중심으로\n" +
+                    "양 옆으로 펼쳐진 케이블은 아름다운 자태의\n" +
+                    "거대한 황사게 길고 흰 날개를 펼친 모습이다.");
+
+            sampleImg01.setImageResource(R.drawable.yedang01);
+            sampleImg02.setImageResource(R.drawable.yedang02);
+        }
+        if(name.equals("태안 빛축제")){
+            desc.setText("오천평 넓은 대지에서 펼쳐지는 밤의 축제\n" +
+                    "어린이들에겐 환상적인 동화의 나라를\n" +
+                    "어른이들에겐 낭만적인 테마의 섬을 선보일 이곳은\n" +
+                    "365일이 아름다운 빛의 나라이다.\n");
+
+            sampleImg01.setImageResource(R.drawable.lightfestival01);
+            sampleImg02.setImageResource(R.drawable.lightfestival02);
         }
     }
 
