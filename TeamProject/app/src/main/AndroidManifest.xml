@@ -11,12 +11,13 @@
         android:theme="@style/Theme.TeamProject">
         <activity
             android:name=".LoginActivity"
+            android:theme="@style/SplashTheme"
             android:label="Safe Trip"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
+                <action android:name="android.intent.action.VIEW" />
             </intent-filter>
         </activity>
         <activity
