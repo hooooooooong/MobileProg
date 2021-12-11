@@ -1,5 +1,9 @@
 package com.example.teamproject;
 
+import static com.example.teamproject.CalendarUtilsActivity.daysInMonthArray;
+import static com.example.teamproject.CalendarUtilsActivity.monthYearFromDate;
+
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -18,27 +22,27 @@ import java.util.ArrayList;
 
 public class CalendarActivity extends AppCompatActivity implements CalendarAdapterActivity.OnItemListener {
 
+    // 초기 설정
     private TextView monthYearText;
     private RecyclerView calendarRecyclerView;
-    private LocalDate selectedDate;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calendar);
         initWidgets();
-        selectedDate = LocalDate.now();
+        CalendarUtilsActivity.selectedDate = LocalDate.now();
         setMonthView();
     }
-
+    // 레이아웃 요소 가져오기
     private void initWidgets() {
         calendarRecyclerView = findViewById(R.id.calendarRecyclerView);
-        monthYearText = findViewById(R.id.monthYear);
+        monthYearText = findViewById(R.id.monthYearTV);
     }
 
+    // 월 달력 셀 구성
     private void setMonthView() {
-        monthYearText.setText(monthYearFromDate(selectedDate));
-        ArrayList<String> daysInMonth = daysInMonthArray(selectedDate);
+        monthYearText.setText(monthYearFromDate(CalendarUtilsActivity.selectedDate));
+        ArrayList<LocalDate> daysInMonth = daysInMonthArray(CalendarUtilsActivity.selectedDate);
 
         CalendarAdapterActivity calendarAdapterActivity = new CalendarAdapterActivity(daysInMonth, this);
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getApplicationContext(), 7);
@@ -46,44 +50,26 @@ public class CalendarActivity extends AppCompatActivity implements CalendarAdapt
         calendarRecyclerView.setAdapter(calendarAdapterActivity);
     }
 
-    private ArrayList<String> daysInMonthArray(LocalDate date) {
-        ArrayList<String> daysInMonthArray = new ArrayList<>();
-        YearMonth yearMonth = YearMonth.from(date);
-
-        int daysInMonth = yearMonth.lengthOfMonth();
-
-        LocalDate firstOfMonth = selectedDate.withDayOfMonth(1);
-        int dayOfWeek = firstOfMonth.getDayOfWeek().getValue();
-
-        for(int i=1; i<=42 ; i++) {
-            if(i <=dayOfWeek || i>daysInMonth + dayOfWeek) {
-                daysInMonthArray.add("");
-            } else {
-                daysInMonthArray.add(String.valueOf(i - dayOfWeek));
-            }
-        }
-        return daysInMonthArray;
-    }
-
-    private String monthYearFromDate(LocalDate date) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy\nMMMM");
-        return date.format(formatter);
-    }
-
+    // 이전, 이후 달로 이동
     public void previousMonthAction(View view) {
-        selectedDate = selectedDate.minusMonths(1);
+        CalendarUtilsActivity.selectedDate = CalendarUtilsActivity.selectedDate.minusMonths(1);
         setMonthView();
     }
     public void nextMonthAction(View view) {
-        selectedDate = selectedDate.plusMonths(1);
+        CalendarUtilsActivity.selectedDate = CalendarUtilsActivity.selectedDate.plusMonths(1);
         setMonthView();
     }
 
+    // 일 선택
     @Override
-    public void onItemClick(int position, String dayText) {
-        if(dayText.equals("")) {
-            String message = "Selected Date " + dayText + " " + monthYearFromDate(selectedDate);
-            Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+    public void onItemClick(int position, LocalDate date) {
+        if(date != null) {
+            CalendarUtilsActivity.selectedDate = date;
+            setMonthView();
         }
+    }
+
+    public void weeklyAction(View view) {
+        startActivity(new Intent(this, CalendarWeekViewActivity.class));
     }
 }
