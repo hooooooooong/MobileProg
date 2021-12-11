@@ -36,6 +36,14 @@
             android:label="Calendar">
         </activity>
         <activity
+            android:name=".CalendarWeekViewActivity"
+            android:label="Calendar Week">
+        </activity>
+        <activity
+            android:name=".CalendarScheduleActivity"
+            android:label="Calendar Schedule">
+        </activity>
+        <activity
             android:name=".MainActivity"
             android:label="Safe Trip">
         </activity>

@@ -4,8 +4,8 @@
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
-    tools:context=".CalendarActivity">
-    
+    tools:context=".CalendarWeekViewActivity">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -22,7 +22,7 @@
             android:textColor="@color/black"
             android:textSize="20sp"
             android:textStyle="bold"
-            android:onClick="previousMonthAction"/>
+            android:onClick="previousWeekAction"/>
         <TextView
             android:id="@+id/monthYearTV"
             android:layout_width="0dp"
@@ -41,8 +41,8 @@
             android:textColor="@color/black"
             android:textSize="20sp"
             android:textStyle="bold"
-            android:onClick="nextMonthAction"/>
-        
+            android:onClick="nextWeekAction"/>
+
     </LinearLayout>
 
     <LinearLayout
@@ -103,7 +103,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="토"
-           android:textColor="@color/black"
+            android:textColor="@color/black"
             android:textAlignment="center"
             android:textSize="16sp"/>
 
@@ -118,13 +118,18 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="50dp"
         android:layout_gravity="center"
         android:backgroundTint="#FFFFFF"
-        android:text="일정 확인"
+        android:text="일정 추가"
         android:textColor="@color/black"
         android:textSize="20sp"
         android:textStyle="bold"
-        android:onClick="weeklyAction"/>
+        android:onClick="newScheduleAction"/>
+
+    <ListView
+        android:id="@+id/scheduleListView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="5"/>
 
 </LinearLayout>
