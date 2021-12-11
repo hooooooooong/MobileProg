@@ -32,16 +32,16 @@ public class InfoActivity extends AppCompatActivity{
         ArrayList<String> destinations = new ArrayList<>();
 
         if(region.equals("Seoul")){
-            destinations.addAll(Arrays.asList("서울숲", "여행맛", "하늘공원"));
+            destinations.addAll(Arrays.asList("서울숲", "낙산공원", "하늘공원"));
         }
         else if(region.equals("Gyeonggi")){
-            destinations.addAll(Arrays.asList("대부도 바다향기 수목원", "평강랜드", "수산공원"));
+            destinations.addAll(Arrays.asList("대부도 바다향기 수목원", "평강랜드", "물의정원"));
         }
         else if(region.equals("Chungcheong")){
-            destinations.addAll(Arrays.asList("구담봉", "옥순봉", "단양강 잔도", "제천 의림지와 제림", "예당호", "태안 빛축제", "웅도"));
+            destinations.addAll(Arrays.asList("구담봉", "옥순봉", "단양강 잔도", "제천 의림지와 제림", "예당호 출렁다리", "태안 빛축제"));
         }
         else if(region.equals("Gangwon")){
-            destinations.addAll(Arrays.asList("원대리 자작나무 숲", "태백산 천상의 화원", "상도문 돌담마을"));
+            destinations.addAll(Arrays.asList("원대리 자작나무 숲", "곰배령", "상도문 돌담마을"));
         }
         else if(region.equals("Jeolla")){
             destinations.addAll(Arrays.asList("강천산 단월야행", "선유도", "채석강", "황룡강", "순천만 습지", "화순 세량지"));
