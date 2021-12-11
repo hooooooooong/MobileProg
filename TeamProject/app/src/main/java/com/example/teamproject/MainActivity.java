@@ -29,22 +29,19 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void CheckOnClick(View view){
-        Intent intent_Check = new Intent(MainActivity.this, CheckListActivity.class);
-        intent_Check.putExtra("type", "check");
-        startActivity(intent_Check);
+        Intent intent = new Intent(MainActivity.this, CheckListActivity.class);
+        startActivity(intent);
     }
 
     public void CalOnClick(View view){
-        Intent intent_Cal = new Intent(MainActivity.this, CalendarActivity.class);
-        startActivity(intent_Cal);
+        Intent intent = new Intent(MainActivity.this, CalendarActivity.class);
+        startActivity(intent);
     }
 
-    public void onClick(View view){
+    public void onClick(View view){ //로그아웃
         FirebaseAuth.getInstance().signOut();
         finish();
         Intent intent = new Intent(MainActivity.this, LoginActivity.class);
         startActivity(intent);
     }
-
-    // Test
 }
