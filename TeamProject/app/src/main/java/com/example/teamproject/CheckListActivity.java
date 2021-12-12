@@ -41,7 +41,6 @@ public class CheckListActivity extends AppCompatActivity {
         AdapterView.OnItemClickListener a = new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                //Toast.makeText(getApplicationContext(), adapter.getItem(i), Toast.LENGTH_SHORT).show();
                 checkListView.onSaveInstanceState();
             }
         };
