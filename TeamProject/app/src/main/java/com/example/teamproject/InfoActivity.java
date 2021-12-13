@@ -44,10 +44,10 @@ public class InfoActivity extends AppCompatActivity{
             destinations.addAll(Arrays.asList("원대리 자작나무 숲", "곰배령", "상도문 돌담마을"));
         }
         else if(region.equals("Jeolla")){
-            destinations.addAll(Arrays.asList("강천산 단월야행", "선유도", "채석강", "황룡강", "순천만 습지", "화순 세량지"));
+            destinations.addAll(Arrays.asList("강천산 단월야행", "선유도", "채석강", "황룡강 생태공원", "순천만 습지", "화순 세량지"));
         }
         else if(region.equals("Jeju")){
-            destinations.addAll(Arrays.asList("우도", "성산일출봉", "올레길"));
+            destinations.addAll(Arrays.asList("사려니숲길", "성산일출봉", "섭지코지"));
         }
         else if(region.equals("Gyeongsang")){
             destinations.addAll(Arrays.asList("호미반도 해안둘레길", "국제 밤하늘 보호공원", "곤륜산 활공장", "보물섬 전망대", "바람의 언덕"));

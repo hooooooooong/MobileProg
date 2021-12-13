@@ -34,18 +34,18 @@ public class CheckListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_checklist);
         checkedString = fileRead(FILECHECKED);
         checkListString = fileRead(FILELIST);
-        CheckList();
+        checkListAdapt();
         AdapterView.OnItemClickListener a = new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                //Toast.makeText(getApplicationContext(), adapter.getItem(i), Toast.LENGTH_SHORT).show();
                 checkListView.onSaveInstanceState();
             }
         };
         checkListView.setOnItemClickListener(a);
+        longClickDelete();
     }
 
-    public void CheckList(){
+    public void checkListAdapt(){
         String []stringCheckList = checkListString.split("/");
         String []checkedList = checkedString.split("/");
         listItem = new ArrayList<>(Arrays.asList(stringCheckList));
@@ -53,6 +53,13 @@ public class CheckListActivity extends AppCompatActivity {
         checkListView = findViewById(R.id.regionListView);
         checkListView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
         checkListView.setAdapter(adapter);
+        //아무것도 없는 상황의 경우, stringCheckList는 null이 아니라 [""]임.
+        if (stringCheckList[0].equals("")){
+            ArrayList <String> items = new ArrayList<String>();
+            adapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_list_item_multiple_choice, items);
+            checkListView.setAdapter(adapter);
+            return;
+        }
         int i = 0;
         for(String str : stringCheckList){
             for (String strc : checkedList)
@@ -87,26 +94,32 @@ public class CheckListActivity extends AppCompatActivity {
         System.out.println(arrayToString);
     }
 
-    public void onClickDelete(View view){
+    public void longClickDelete(){
+        checkListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> a_parent, View a_view, int a_position, long a_id) {
+                String []stringCheckList = checkListString.split("/");
+                delete(stringCheckList[a_position]);
+                return true;
+            }
+        });
+    }
+
+    public void delete(String target){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("삭제").setMessage("체크된 요소들이 삭제됩니다. 계속하시겠습니까?");
-        builder.setPositiveButton("YES", new DialogInterface.OnClickListener(){
+        builder.setTitle("삭제").setMessage("해당 물품을 삭제하시겠습니까?");
+        builder.setPositiveButton("예", new DialogInterface.OnClickListener(){
             @Override
             public void onClick(DialogInterface dialog, int id)
             {
-                String []stringCheckList = checkListString.split("/");
-                SparseBooleanArray checkedItems = checkListView.getCheckedItemPositions();
-                int count = adapter.getCount();
-                for (int i = 0; i < count; i++) {
-                    if (checkedItems.get(i)) {
-                        String temp = stringCheckList[i] + "/";
-                        checkListString = checkListString.replace(temp,"");
-                        CheckList();
-                    }
-                }
+                checkListString = checkListString.replace(target + "/","");
+                checkedString = checkedString.replace(target + "/","");
+                checkListString = checkListString.replace(target,"");
+                checkedString = checkedString.replace(target,"");
+                checkListAdapt();
             }
         });
-        builder.setNegativeButton("NO", new DialogInterface.OnClickListener(){
+        builder.setNegativeButton("아니오", new DialogInterface.OnClickListener(){
             @Override
             public void onClick(DialogInterface dialog, int id)
             {
@@ -119,25 +132,36 @@ public class CheckListActivity extends AppCompatActivity {
     public void onClickAppend(View view){
         EditText edittext = new EditText(this);
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("삭제").setMessage("추가하고자 하는 요소 입력.").setView(edittext);
+        builder.setTitle("삭제").setMessage("추가하고자 하는 물품 입력.").setView(edittext);
         builder.setPositiveButton("확인", new DialogInterface.OnClickListener(){
             @Override
             public void onClick(DialogInterface dialog, int id)
             {
                 String []stringCheckList = checkListString.split("/");
                 String append_str = edittext.getText().toString();
-                if (Arrays.asList(stringCheckList).contains(append_str))
+                if (append_str.equals("")){
+                    Toast.makeText(getApplicationContext(),"추가하고자 하는 물품을 입력해 주세요.", Toast.LENGTH_SHORT).show();
+                }
+                else if (append_str.contains("/")){
+                    Toast.makeText(getApplicationContext(),"특수문자 / 는 포함 할 수 없습니다.", Toast.LENGTH_SHORT).show();
+                }
+                else if (Arrays.asList(stringCheckList).contains(append_str))
                     Toast.makeText(getApplicationContext(),"이미 존재합니다.", Toast.LENGTH_SHORT).show();
                 else{
                     checkListString += append_str +"/";
-                    CheckList();
+                    checkListAdapt();
                 }
+            }
+        });
+        builder.setNegativeButton("취소", new DialogInterface.OnClickListener(){
+            @Override
+            public void onClick(DialogInterface dialog, int id)
+            {
             }
         });
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
     }
-    //test
 
     public void fileWrite(String fileName ,String toWrite){
         //파일 쓰기
@@ -152,7 +176,7 @@ public class CheckListActivity extends AppCompatActivity {
 
     public String fileRead(String fileName){
         String ret = "";
-        //아래 코드는 텍스트파일 내용을 불러오는 과정이다.
+        //파일 읽기
         try {
             FileInputStream fis = openFileInput(fileName);
             byte[] buffer = new byte[fis.available()];
