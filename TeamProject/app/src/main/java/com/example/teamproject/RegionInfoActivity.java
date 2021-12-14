@@ -4,21 +4,36 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
 public class RegionInfoActivity extends AppCompatActivity {
+    public static String[] ratings;
     TextView regionName;
     TextView desc;
+    TextView ratingValue;
     ImageView sampleImg01;
     ImageView sampleImg02;
+    Button ratingButton;
+    RatingBar ratingBar;
 
+    @SuppressLint({"ClickableViewAccessibility", "SetTextI18n"})
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_region_info);
@@ -26,17 +41,39 @@ public class RegionInfoActivity extends AppCompatActivity {
         Intent intent = getIntent();
         String name = intent.getStringExtra("name");
         setTitle(name);
+        float rating = ReadRatingFile(name + " rating");
 
         regionName = findViewById(R.id.Name);
         desc = findViewById(R.id.Description);
+        ratingValue = findViewById(R.id.ratingValue);
         sampleImg01 = findViewById(R.id.sampleImg01);
         sampleImg02 = findViewById(R.id.sampleImg02);
+        ratingButton = findViewById(R.id.ratingButton);
+        ratingBar = findViewById(R.id.ratingBar);
+
+        ratingBar.setRating(rating);
+        ratingValue.setText(rating + "/5.0");
 
         TextView link = findViewById(R.id.Link);
 
         setTextRegion(name);
 
+        ratingBar.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                if(motionEvent.getAction() == MotionEvent.ACTION_UP){
+                    Intent reviewIntent = new Intent(getApplicationContext(), ReviewActivity.class);
+                    reviewIntent.putExtra("destination", name);
+                    startActivity(reviewIntent);
+                }
+                return true;
+            }
+        });
+
+        Map<String, String> urls = new HashMap<String, String>();
+        setUrls(urls);
         link.setOnClickListener(new View.OnClickListener(){
+            @SuppressLint("QueryPermissionsNeeded")
             public void onClick(View view){
                 Intent urlIntent;
                 Map<String, String> urls = new HashMap<String, String>();
@@ -49,10 +86,50 @@ public class RegionInfoActivity extends AppCompatActivity {
         morePictures.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent gridLayoutIntent = new Intent(getApplicationContext() , GridLayoutActivity.class);
+                Intent gridLayoutIntent = new Intent(getApplicationContext(), GridLayoutActivity.class);
                 startActivity(gridLayoutIntent);
             }
         });
+
+        ratingButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent ratingIntent = new Intent(getApplicationContext(), RatingActivity.class);
+                ratingIntent.putExtra("destination", name);
+                startActivity(ratingIntent);
+            }
+        });
+    }
+
+    @SuppressLint("SdCardPath")
+    float ReadRatingFile(String fn){
+        File fp = new File("/data/data/com.example.teamproject/files" + "/" + fn);
+        if(!fp.exists()) return 0.0f;
+
+        String txt = "";
+
+        try{
+            FileInputStream fis = openFileInput(fn);
+            byte[] buffer = new byte[fis.available()];
+            fis.read(buffer);
+            txt = new String(buffer);
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+        ratings = txt.split("\n");
+        return GetAvg(ratings);
+    }
+
+    float GetAvg(String[] ratings){
+        float sum = 0.0f;
+        float avg;
+
+        for (String rating : ratings) {
+            sum += Float.parseFloat(rating);
+        }
+        avg = sum/ratings.length;
+        return avg;
     }
 
     Intent getUrls(Map<String, String> urls, String name){
@@ -64,72 +141,29 @@ public class RegionInfoActivity extends AppCompatActivity {
     }
 
     void setUrls(Map<String, String> urls){
-        setUrlsSeoul(urls);
-        setUrlsGyeongGi(urls);
-        setUrlsChungcheong(urls);
-        setUrlsGangwon(urls);
-        setUrlsJeolla(urls);
-        setUrlsJeju(urls);
-        setUrlsGyeongsang(urls);
-    }
+        String txt = "";
+        String[] urlText;
+        int line;
+        InputStream inputStream = getResources().openRawResource(R.raw.urls);
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
 
-    void setUrlsSeoul(Map<String, String> urls){
-        urls.put("서울숲", "https://www.youtube.com/watch?v=fTrdYm_h-3Q");
-        urls.put("하늘공원", "https://www.youtube.com/watch?v=r-yZuLO80xw");
-        urls.put("낙산공원", "https://www.youtube.com/watch?v=t0z4dPgiiU8");
-    }
+        try{
+            line = inputStream.read();
+            while(line != -1){
+                byteArrayOutputStream.write(line);
+                line = inputStream.read();
+            }
+            txt = byteArrayOutputStream.toString("UTF-8");
+            inputStream.close();
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
 
-    void setUrlsGyeongGi(Map<String, String> urls){
-        urls.put("대부도 바다향기 수목원", "https://www.youtube.com/watch?v=75Kwscgnk08");
-        urls.put("평강랜드", "https://www.youtube.com/watch?v=RHnZvMxx3i8");
-        urls.put("물의정원", "https://www.youtube.com/watch?v=e0yoAjvV2mg");
-    }
-
-    void setUrlsChungcheong(Map<String, String> urls){
-        urls.put("구담봉", "https://www.youtube.com/watch?v=0XjdXSESy-w");
-        urls.put("옥순봉", "https://www.youtube.com/watch?v=oJRjhgOZGtY");
-        urls.put("단양강 잔도", "https://www.youtube.com/watch?v=oJF1mrIvPDQ");
-        urls.put("제천 의림지와 제림", "https://www.youtube.com/watch?v=QlDCkdrK1GA");
-        urls.put("예당호 출렁다리", "https://www.youtube.com/watch?v=ZatPegMr-xk");
-        urls.put("태안 빛축제", "https://www.youtube.com/watch?v=Vsue18ClBGw");
-    }
-
-    void setUrlsGangwon(Map<String, String> urls){
-        urls.put("원대리 자작나무 숲", "https://www.youtube.com/watch?v=VWoPSbVl-nA");
-        urls.put("곰배령", "https://www.youtube.com/watch?v=-jOeYIvVHxs");
-        urls.put("상도문 돌담마을", "https://www.youtube.com/watch?v=rekQ_XMCUxM");
-    }
-
-    void setUrlsJeolla(Map<String, String> urls){
-        urls.put("강천산 단월야행", "https://www.youtube.com/watch?v=Ef-Uj1VSpvM");
-        urls.put("선유도", "https://www.youtube.com/watch?v=SthYqX0-t0s");
-        urls.put("채석강", "https://www.youtube.com/watch?v=kPdgwo2pIS0");
-        urls.put("황룡강 생태공원", "https://www.youtube.com/watch?v=yHL5vIb54w0");
-        urls.put("순천만 습지", "https://www.youtube.com/watch?v=6D_dFfafifs");
-        urls.put("화순 세량지", "https://www.youtube.com/watch?v=uBoeY79CSh4");
-    }
-
-    void setUrlsJeju(Map<String, String> urls){
-        urls.put("사려니숲길", "https://www.youtube.com/watch?v=m9rsv0lJsnE");
-        urls.put("성산일출봉", "https://www.youtube.com/watch?v=gAxAolNaXso");
-        urls.put("섭지코지", "https://www.youtube.com/watch?v=mioLulk8MwY");
-    }
-
-    void setUrlsGyeongsang(Map<String, String> urls){
-        urls.put("호미반도 해안둘레길", "https://www.youtube.com/watch?v=ATUN2_GrRBw");
-        urls.put("국제 밤하늘 보호공원", "https://www.youtube.com/watch?v=fwJ0UNrjUHA");
-        urls.put("곤륜산 활공장", "https://www.youtube.com/watch?v=QX2BFitat34");
-        urls.put("보물섬 전망대", "https://www.youtube.com/watch?v=h5bDl3wrabg");
-        urls.put("바람의 언덕", "https://www.youtube.com/watch?v=RXwBN3CHtkA");
-    }
-
-    void setUrlsETC(Map<String, String> urls){
-        urls.put("호미반도 해안둘레길", "https://www.youtube.com/watch?v=ATUN2_GrRBw");
-        urls.put("국제 밤하늘 보호공원", "https://www.youtube.com/watch?v=fwJ0UNrjUHA");
-        urls.put("곤륜산 활공장", "https://www.youtube.com/watch?v=QX2BFitat34");
-        urls.put("보물섬 전망대", "https://www.youtube.com/watch?v=h5bDl3wrabg");
-        urls.put("바람의 언덕", "https://www.youtube.com/watch?v=RXwBN3CHtkA");
-        urls.put("바람의 언덕", "https://www.youtube.com/watch?v=RXwBN3CHtkA");
+        urlText = txt.split("\n");
+        for (String s : urlText) {
+            urls.put(s.split("-")[0], s.split("-")[1]);
+        }
     }
 
     @SuppressLint("SetTextI18n")
