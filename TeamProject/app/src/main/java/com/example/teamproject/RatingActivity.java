@@ -85,7 +85,7 @@ public class RatingActivity extends AppCompatActivity {
         });
     }
 
-    void SaveRating(){
+    void SaveRating(){ //평점 파일 저장
         String fn = name + " rating";
         String rating = Float.toString(ratingBar.getRating()) + '\n';
 
@@ -99,7 +99,7 @@ public class RatingActivity extends AppCompatActivity {
         }
     }
 
-    void SaveReview(){
+    void SaveReview(){ //리뷰 파일 저장
         String fn = name + " review";
         String reviewText = review.getText().toString() + "//" + getDate + '\n';
 

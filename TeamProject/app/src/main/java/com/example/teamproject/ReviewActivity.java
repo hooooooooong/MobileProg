@@ -54,7 +54,8 @@ public class ReviewActivity extends AppCompatActivity {
     }
 
     void SetAdapter(String[] reviews){
-        for(int i=0;i<reviews.length;i++){
+        for(int i=reviews.length-1;i>=0;i--){
+            if(reviews.length - i > 40) return; //최신순으로 40개만 출력
             HashMap<String, String> item = new HashMap<String, String>();
             item.put("review", reviews[i].split("//")[0]);
             item.put("info", "★ " + RegionInfoActivity.ratings[i] + " | " + reviews[i].split("//")[1]);
