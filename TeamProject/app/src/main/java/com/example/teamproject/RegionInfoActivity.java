@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
@@ -11,35 +12,42 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 public class RegionInfoActivity extends AppCompatActivity {
-    public static String[] ratings;
     TextView regionName;
     TextView desc;
     TextView ratingValue;
+    TextView link;
     ImageView sampleImg01;
     ImageView sampleImg02;
     Button ratingButton;
     RatingBar ratingBar;
+    DatabaseReference mDatabase;
+    ArrayList<String> keys;
+    String name;
+    double rating;
 
     @SuppressLint({"ClickableViewAccessibility", "SetTextI18n", "DefaultLocale"})
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_region_info);
-
-        Intent intent = getIntent();
-        String name = intent.getStringExtra("name");
-        setTitle(name);
-        float rating = ReadRatingFile(name + " rating");
 
         regionName = findViewById(R.id.Name);
         desc = findViewById(R.id.Description);
@@ -48,11 +56,32 @@ public class RegionInfoActivity extends AppCompatActivity {
         sampleImg02 = findViewById(R.id.sampleImg02);
         ratingButton = findViewById(R.id.ratingButton);
         ratingBar = findViewById(R.id.ratingBar);
+        link = findViewById(R.id.Link);
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+        keys = new ArrayList<>();
 
-        ratingBar.setRating(rating);
-        ratingValue.setText(String.format("%.2f", rating) + "/5.0");
+        Intent intent = getIntent();
+        name = intent.getStringExtra("name");
+        setTitle(name);
 
-        TextView link = findViewById(R.id.Link);
+        mDatabase.child("reviews").child(name).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                keys.clear();
+                rating = 0.0d;
+                for (DataSnapshot postSnapshot: snapshot.getChildren()) {
+                    keys.add(postSnapshot.getKey());
+                    Reviews reviews = postSnapshot.getValue(Reviews.class);
+                    rating += reviews.rating;
+                    ratingBar.setRating((float)(rating/(double)keys.size()));
+                    ratingValue.setText(String.format("%.2f", rating/(double)keys.size()) + "/5.0");
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
         SetInfo(name);
 
@@ -97,36 +126,6 @@ public class RegionInfoActivity extends AppCompatActivity {
                 startActivity(ratingIntent);
             }
         });
-    }
-
-    @SuppressLint("SdCardPath")
-    float ReadRatingFile(String fn){
-        File fp = new File("/data/data/com.example.teamproject/files" + "/" + fn);
-        if(!fp.exists()) return 0.0f;
-
-        String txt = "";
-        try{
-            FileInputStream fis = openFileInput(fn);
-            byte[] buffer = new byte[fis.available()];
-            fis.read(buffer);
-            txt = new String(buffer);
-        }
-        catch (IOException e) {
-            e.printStackTrace();
-        }
-        ratings = txt.split("\n"); //static 변수
-        return GetAvg(ratings);
-    }
-
-    float GetAvg(String[] ratings){
-        float sum = 0.0f;
-        float avg;
-
-        for (String rating : ratings) {
-            sum += Float.parseFloat(rating);
-        }
-        avg = sum/ratings.length;
-        return avg;
     }
 
     Intent GetUrls(Map<String, String> urls, String name){
