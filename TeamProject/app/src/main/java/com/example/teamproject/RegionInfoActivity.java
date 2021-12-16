@@ -71,6 +71,10 @@ public class RegionInfoActivity extends AppCompatActivity {
                 rating = 0.0d;
                 for (DataSnapshot postSnapshot: snapshot.getChildren()) {
                     keys.add(postSnapshot.getKey());
+                    while (keys.size() > 50) {
+                        mDatabase.child("reviews").child(name).child(keys.get(0)).setValue(null);
+                        keys.remove(0);
+                    }
                     Reviews reviews = postSnapshot.getValue(Reviews.class);
                     rating += reviews.rating;
                     ratingBar.setRating((float)(rating/(double)keys.size()));
