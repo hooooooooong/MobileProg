@@ -36,6 +36,7 @@ public class PictureActivity extends AppCompatActivity {
 
         arrow.setOnClickListener(new View.OnClickListener(){
             public void onClick(View view){
+                finish();
                 Intent intent = new Intent(PictureActivity.this, InfoActivity.class); //전환할 액티비티
                 intent.putExtra("region", type);
                 startActivity(intent); //액티비티 전환
@@ -45,9 +46,6 @@ public class PictureActivity extends AppCompatActivity {
     }
 
     public void ShowImage(String type){
-
-        ArrayList<String> destinations = new ArrayList<>();
-
         ImageView picture = findViewById(R.id.img);
         if(type.equals("Seoul")){
             picture.setImageResource(R.drawable.seoul);

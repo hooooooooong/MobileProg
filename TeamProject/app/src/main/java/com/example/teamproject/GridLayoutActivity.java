@@ -27,14 +27,12 @@ public class GridLayoutActivity extends AppCompatActivity {
          * */
         gridView.setOnItemClickListener(new OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View v,
-                                    int position, long id) {
-
+            public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
                 // Sending image id to FullScreenActivity
-                Intent i = new Intent(getApplicationContext(), FullImageActivity.class);
+                Intent intent = new Intent(getApplicationContext(), FullImageActivity.class);
                 // passing array index
-                i.putExtra("id", position);
-                startActivity(i);
+                intent.putExtra("id", position);
+                startActivity(intent);
             }
         });
     }

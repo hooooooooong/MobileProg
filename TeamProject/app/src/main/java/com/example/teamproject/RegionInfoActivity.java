@@ -4,22 +4,34 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
 public class RegionInfoActivity extends AppCompatActivity {
-    public TextView regionName;
-    public TextView desc;
-    public ImageView sampleImg01;
-    public ImageView sampleImg02;
+    public static String[] ratings;
+    TextView regionName;
+    TextView desc;
+    TextView ratingValue;
+    ImageView sampleImg01;
+    ImageView sampleImg02;
+    Button ratingButton;
+    RatingBar ratingBar;
 
-    @SuppressLint("SetTextI18n")
+    @SuppressLint({"ClickableViewAccessibility", "SetTextI18n", "DefaultLocale"})
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_region_info);
@@ -27,22 +39,42 @@ public class RegionInfoActivity extends AppCompatActivity {
         Intent intent = getIntent();
         String name = intent.getStringExtra("name");
         setTitle(name);
+        float rating = ReadRatingFile(name + " rating");
 
         regionName = findViewById(R.id.Name);
         desc = findViewById(R.id.Description);
+        ratingValue = findViewById(R.id.ratingValue);
         sampleImg01 = findViewById(R.id.sampleImg01);
         sampleImg02 = findViewById(R.id.sampleImg02);
+        ratingButton = findViewById(R.id.ratingButton);
+        ratingBar = findViewById(R.id.ratingBar);
 
-        editInfo(name);
+        ratingBar.setRating(rating);
+        ratingValue.setText(String.format("%.2f", rating) + "/5.0");
 
         TextView link = findViewById(R.id.Link);
 
+        SetInfos(name);
+
+        ratingBar.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                if(motionEvent.getAction() == MotionEvent.ACTION_UP){
+                    Intent reviewIntent = new Intent(getApplicationContext(), ReviewActivity.class);
+                    reviewIntent.putExtra("destination", name);
+                    startActivity(reviewIntent);
+                }
+                return true;
+            }
+        });
+
+        Map<String, String> urls = new HashMap<String, String>();
+        SetUrls(urls);
         link.setOnClickListener(new View.OnClickListener(){
             public void onClick(View view){
                 Intent urlIntent;
                 Map<String, String> urls = new HashMap<String, String>();
-                urls.put("서울숲", "https://www.youtube.com/watch?v=fTrdYm_h-3Q");
-                urlIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(urls.get(name)));
+                urlIntent = GetUrls(urls, name);
                 if(urlIntent.resolveActivity(getPackageManager()) != null) startActivity(urlIntent);
             }
         });
@@ -51,41 +83,122 @@ public class RegionInfoActivity extends AppCompatActivity {
         morePictures.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent gridLayoutIntent = new Intent(getApplicationContext() , GridLayoutActivity.class);
+                Intent gridLayoutIntent = new Intent(getApplicationContext(), GridLayoutActivity.class);
                 startActivity(gridLayoutIntent);
+            }
+        });
+
+        ratingButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent ratingIntent = new Intent(getApplicationContext(), RatingActivity.class);
+                ratingIntent.putExtra("destination", name);
+                startActivity(ratingIntent);
             }
         });
     }
 
-    @SuppressLint("SetTextI18n")
-    public void editInfo(String name){
+    @SuppressLint("SdCardPath")
+    float ReadRatingFile(String fn){
+        File fp = new File("/data/data/com.example.teamproject/files" + "/" + fn);
+        if(!fp.exists()) return 0.0f;
+
+        String txt = "";
+
+        try{
+            FileInputStream fis = openFileInput(fn);
+            byte[] buffer = new byte[fis.available()];
+            fis.read(buffer);
+            txt = new String(buffer);
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+        ratings = txt.split("\n");
+        return GetAvg(ratings);
+    }
+
+    float GetAvg(String[] ratings){
+        float sum = 0.0f;
+        float avg;
+
+        for (String rating : ratings) {
+            sum += Float.parseFloat(rating);
+        }
+        avg = sum/ratings.length;
+        return avg;
+    }
+
+    Intent GetUrls(Map<String, String> urls, String name){
+        SetUrls(urls);
+        Intent urlIntent;
+        urlIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(urls.get(name)));
+        urls.clear();
+        return urlIntent;
+    }
+
+    void SetUrls(Map<String, String> urls){
+        String txt = "";
+        String[] urlText;
+        int line;
+        InputStream inputStream = getResources().openRawResource(R.raw.urls);
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+
+        try{
+            line = inputStream.read();
+            while(line != -1){
+                byteArrayOutputStream.write(line);
+                line = inputStream.read();
+            }
+            txt = byteArrayOutputStream.toString("UTF-8");
+            inputStream.close();
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        urlText = txt.split("\n");
+        for (String s : urlText) {
+            urls.put(s.split("-")[0], s.split("-")[1]);
+        }
+    }
+
+    void ReadInfoFile(Map<String, String> text, Map<String, String> img01, Map<String, String> img02){
+        String txt = "";
+        String[] infos;
+        int line;
+        InputStream inputStream = getResources().openRawResource(R.raw.infos);
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+
+        try{
+            line = inputStream.read();
+            while(line != -1){
+                byteArrayOutputStream.write(line);
+                line = inputStream.read();
+            }
+            txt = byteArrayOutputStream.toString("UTF-8");
+            inputStream.close();
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+        infos = txt.split("newLine");
+        for (String s : infos) {
+            text.put(s.split("-")[0].trim(), s.split("-")[1].trim());
+            img01.put(s.split("-")[0].trim(), s.split("-")[2].trim());
+            img02.put(s.split("-")[0].trim(), s.split("-")[3].trim());
+        }
+    }
+
+    void SetInfos(String name){
         regionName.setText(name);
-        if(name.equals("서울숲")){
-            desc.setText("'스스로 탑험하며 자연에 가까이 다가가는 시간'\n" +
-                    "서울숲은 문화예술공원, 체험학습원, 생태숲, 습지생태원\n" +
-                    "네 가지의 특색 있는 공간들로 구성되어 있으며\n" +
-                    "한강과 맞닿아 있어 다양한 문화여가공간을 제공합니다.");
-
-            sampleImg01.setImageResource(R.drawable.seoulforest01);
-            sampleImg02.setImageResource(R.drawable.seoulforest02);
-        }
-        if(name.equals("여행맛")){
-            desc.setText("'스스로 탑험하며 자연에 가까이 다가가는 시간'\n" +
-                    "서울숲은 문화예술공원, 체험학습원, 생태숲, 습지생태원\n" +
-                    "네 가지의 특색 있는 공간들로 구성되어 있으며\n" +
-                    "한강과 맞닿아 있어 다양한 문화여가공간을 제공합니다.");
-
-            sampleImg01.setImageResource(R.drawable.seoulforest01);
-            sampleImg02.setImageResource(R.drawable.seoulforest02);
-        }
-        if(name.equals("하늘공원")){
-            desc.setText("'스스로 탑험하며 자연에 가까이 다가가는 시간'\n" +
-                    "서울숲은 문화예술공원, 체험학습원, 생태숲, 습지생태원\n" +
-                    "네 가지의 특색 있는 공간들로 구성되어 있으며\n" +
-                    "한강과 맞닿아 있어 다양한 문화여가공간을 제공합니다.");
-
-            sampleImg01.setImageResource(R.drawable.seoulforest01);
-            sampleImg02.setImageResource(R.drawable.seoulforest02);
-        }
+        Map<String, String> text = new HashMap<>();
+        Map<String, String> img01 = new HashMap<>();
+        Map<String, String> img02 = new HashMap<>();
+        ReadInfoFile(text, img01, img02);
+        String txt = text.get(name);
+        desc.setText(txt);
+        sampleImg01.setImageResource(getResources().getIdentifier(img01.get(name), "drawable", getPackageName()));
+        sampleImg02.setImageResource(getResources().getIdentifier(img02.get(name), "drawable", getPackageName()));
     }
 }
