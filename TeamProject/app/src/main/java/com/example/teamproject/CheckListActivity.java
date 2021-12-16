@@ -81,6 +81,7 @@ public class CheckListActivity extends AppCompatActivity {
         }
         fileWrite(FILELIST, checkListString);
         fileWrite(FILECHECKED, checkedString);
+        Toast.makeText(getApplicationContext(),"저장완료", Toast.LENGTH_SHORT).show();
     }
 
     public void initialize(){
@@ -117,6 +118,7 @@ public class CheckListActivity extends AppCompatActivity {
                 checkListString = checkListString.replace(target,"");
                 checkedString = checkedString.replace(target,"");
                 checkListAdapt();
+                Toast.makeText(getApplicationContext(),"삭제완료", Toast.LENGTH_SHORT).show();
             }
         });
         builder.setNegativeButton("아니오", new DialogInterface.OnClickListener(){
@@ -132,7 +134,7 @@ public class CheckListActivity extends AppCompatActivity {
     public void onClickAppend(View view){
         EditText edittext = new EditText(this);
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("삭제").setMessage("추가하고자 하는 물품 입력.").setView(edittext);
+        builder.setTitle("추가").setMessage("추가하고자 하는 물품 입력.").setView(edittext);
         builder.setPositiveButton("확인", new DialogInterface.OnClickListener(){
             @Override
             public void onClick(DialogInterface dialog, int id)
@@ -150,6 +152,7 @@ public class CheckListActivity extends AppCompatActivity {
                 else{
                     checkListString += append_str +"/";
                     checkListAdapt();
+                    Toast.makeText(getApplicationContext(),append_str + " 추가완료", Toast.LENGTH_SHORT).show();
                 }
             }
         });

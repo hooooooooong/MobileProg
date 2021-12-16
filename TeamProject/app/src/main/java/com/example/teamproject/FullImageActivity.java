@@ -19,10 +19,10 @@ public class FullImageActivity extends AppCompatActivity {
         setContentView(R.layout.activity_full_image);
 
         // get intent data
-        Intent i = getIntent();
+        Intent intent = getIntent();
 
         // Selected image id
-        position = i.getExtras().getInt("id");
+        position = intent.getExtras().getInt("id");
         imageAdapter = new CustomImageAdapter(this);
 
         imageView = (ImageView) findViewById(R.id.full_image_view);
