@@ -1,3 +1,5 @@
 <resources>
-    <string name="app_name">TeamProject</string>
+    <string name="app_name">Safe Trip</string>
+    <string name="back"><![CDATA[<-]]></string>
+    <string name="forward"><![CDATA[->]]></string>
 </resources>

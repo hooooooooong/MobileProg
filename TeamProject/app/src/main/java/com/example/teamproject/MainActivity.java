@@ -10,31 +10,37 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity {
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
+public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
     }
 
-    public void onClick(View view){
+    public void RegionClick(View view){
+        String name = view.getResources().getResourceEntryName(view.getId());
         Intent intent = new Intent(MainActivity.this, PictureActivity.class);
-        intent.putExtra("type", "Mountain");
+        intent.putExtra("type", name); //이름 전달
         startActivity(intent);
     }
 
-    public void JJonClick(View view){
-        Intent intent_JJ = new Intent(MainActivity.this, PictureActivity.class);
-        intent_JJ.putExtra("type", "Jeju");
-        startActivity(intent_JJ);
+    public void CheckOnClick(View view){
+        Intent intent = new Intent(MainActivity.this, CheckListActivity.class);
+        startActivity(intent);
     }
 
-    public void CheckOnClick(View view){
-        Intent intent_Check = new Intent(MainActivity.this, InfoActivity.class);
-        intent_Check.putExtra("type", 1);
-        startActivity(intent_Check);
+    public void CalOnClick(View view){
+        Intent intent = new Intent(MainActivity.this, CalendarActivity.class);
+        startActivity(intent);
     }
-    // first Test
-    // second Test
+
+    public void onClick(View view){ //로그아웃
+        FirebaseAuth.getInstance().signOut();
+        finish();
+        Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+        startActivity(intent);
+    }
 }
