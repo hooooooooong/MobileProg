@@ -84,6 +84,7 @@ public class RegionInfoActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent gridLayoutIntent = new Intent(getApplicationContext(), GridLayoutActivity.class);
+                gridLayoutIntent.putExtra("name", getIntent().getStringExtra("name"));
                 startActivity(gridLayoutIntent);
             }
         });
