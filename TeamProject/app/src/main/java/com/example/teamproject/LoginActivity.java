@@ -32,8 +32,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setTheme(R.style.Theme_SafeTrip);
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_login);
         //initializig firebase auth object
         firebaseAuth = FirebaseAuth.getInstance();
@@ -41,9 +41,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         if(firebaseAuth.getCurrentUser() != null){
             //이미 로그인 되었다면 이 액티비티를 종료함
             finish();
-            //그리고 profile 액티비티를 연다.
-            startActivity(new Intent(getApplicationContext(), MainActivity.class)); //추가해 줄 ProfileActivity
+            //그리고 Main 액티비티를 연다.
+            startActivity(new Intent(getApplicationContext(), MainActivity.class));
         }
+
         //initializing views
         editTextEmail = (EditText) findViewById(R.id.editTextEmail);
         editTextPassword = (EditText) findViewById(R.id.editTextPassword);
