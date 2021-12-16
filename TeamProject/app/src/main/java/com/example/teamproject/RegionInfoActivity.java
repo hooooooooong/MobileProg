@@ -54,7 +54,7 @@ public class RegionInfoActivity extends AppCompatActivity {
 
         TextView link = findViewById(R.id.Link);
 
-        SetInfos(name);
+        SetInfo(name);
 
         ratingBar.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -104,7 +104,6 @@ public class RegionInfoActivity extends AppCompatActivity {
         if(!fp.exists()) return 0.0f;
 
         String txt = "";
-
         try{
             FileInputStream fis = openFileInput(fn);
             byte[] buffer = new byte[fis.available()];
@@ -114,7 +113,7 @@ public class RegionInfoActivity extends AppCompatActivity {
         catch (IOException e) {
             e.printStackTrace();
         }
-        ratings = txt.split("\n");
+        ratings = txt.split("\n"); //static 변수
         return GetAvg(ratings);
     }
 
@@ -165,7 +164,7 @@ public class RegionInfoActivity extends AppCompatActivity {
 
     void ReadInfoFile(Map<String, String> text, Map<String, String> img01, Map<String, String> img02){
         String txt = "";
-        String[] infos;
+        String[] info;
         int line;
         InputStream inputStream = getResources().openRawResource(R.raw.infos);
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
@@ -182,15 +181,15 @@ public class RegionInfoActivity extends AppCompatActivity {
         catch (IOException e) {
             e.printStackTrace();
         }
-        infos = txt.split("newLine");
-        for (String s : infos) {
+        info = txt.split("newLine");
+        for (String s : info) {
             text.put(s.split("-")[0].trim(), s.split("-")[1].trim());
             img01.put(s.split("-")[0].trim(), s.split("-")[2].trim());
             img02.put(s.split("-")[0].trim(), s.split("-")[3].trim());
         }
     }
 
-    void SetInfos(String name){
+    void SetInfo(String name){
         regionName.setText(name);
         Map<String, String> text = new HashMap<>();
         Map<String, String> img01 = new HashMap<>();
