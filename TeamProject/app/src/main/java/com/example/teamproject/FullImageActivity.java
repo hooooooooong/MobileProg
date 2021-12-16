@@ -38,7 +38,6 @@ public class FullImageActivity extends AppCompatActivity {
 
 
     public void onRightArrowClick(View v){
-        Toast.makeText(getApplicationContext(), "next", Toast.LENGTH_SHORT).show();
         if(position + 1 >= imageAdapter.getCount()) {
             Toast.makeText(getApplicationContext(), "마지막 사진입니다.", Toast.LENGTH_SHORT).show();
             return;
@@ -47,7 +46,6 @@ public class FullImageActivity extends AppCompatActivity {
     }
 
     public void onLeftArrowClick(View v) {
-        Toast.makeText(getApplicationContext(), "prev", Toast.LENGTH_SHORT).show();
         if (position - 1 < 0) {
             Toast.makeText(getApplicationContext(), "첫번째 사진입니다.", Toast.LENGTH_SHORT).show();
             return;
