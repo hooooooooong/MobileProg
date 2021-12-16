@@ -90,7 +90,7 @@ public class GridLayoutActivity extends AppCompatActivity {
             ArrayList<String> list = new ArrayList<>();
 
             for(int i = 1; i < imgTxt.length; i++){
-                list.add(imgTxt[i]);
+                list.add(imgTxt[i].trim());
             }
 
             map.put(key, list);
