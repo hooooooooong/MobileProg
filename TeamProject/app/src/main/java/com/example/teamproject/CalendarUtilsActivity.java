@@ -7,20 +7,22 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 public class CalendarUtilsActivity {
-    public static LocalDate selectedDate;
 
+    // 초기 설정
+    public static LocalDate selectedDate;
+    // 날짜 출력 형식 설정
     public static String formattedDate(LocalDate date) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy년 MM월 dd일 EE요일");
         return date.format(formatter);
     }
 
-    // 년월 변경
+    // 캘린더 년, 월 변경
     public static String monthYearFromDate(LocalDate date) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy\nMMMM");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy년\nMM월");
         return date.format(formatter);
     }
 
-    // 년월에 맞게 일 맞춰 넣기
+    // 월에 맞게 일 맞춰 넣기
     public static ArrayList<LocalDate> daysInMonthArray(LocalDate date) {
         ArrayList<LocalDate> daysInMonthArray = new ArrayList<>();
         YearMonth yearMonth = YearMonth.from(date);
@@ -40,6 +42,7 @@ public class CalendarUtilsActivity {
         return daysInMonthArray;
     }
 
+    // 주에 맞게 일 맞춰 넣기
     public static ArrayList<LocalDate> daysInWeekArray(LocalDate selectedDate) {
         ArrayList<LocalDate> days = new ArrayList<>();
         LocalDate current = sundayForDate(selectedDate);
@@ -52,7 +55,6 @@ public class CalendarUtilsActivity {
 
         return days;
     }
-
     private static LocalDate sundayForDate(LocalDate current) {
         LocalDate oneWeekAgo = current.minusWeeks(1);
 
