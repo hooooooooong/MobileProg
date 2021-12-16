@@ -33,13 +33,12 @@ public class CalendarActivity extends AppCompatActivity implements CalendarAdapt
         CalendarUtilsActivity.selectedDate = LocalDate.now();
         setMonthView();
     }
-    // 레이아웃 요소 가져오기
     private void initWidgets() {
         calendarRecyclerView = findViewById(R.id.calendarRecyclerView);
         monthYearText = findViewById(R.id.monthYearTV);
     }
 
-    // 월 달력 셀 구성
+    // 월 단위 캘린더 구성
     private void setMonthView() {
         monthYearText.setText(monthYearFromDate(CalendarUtilsActivity.selectedDate));
         ArrayList<LocalDate> daysInMonth = daysInMonthArray(CalendarUtilsActivity.selectedDate);
@@ -60,7 +59,7 @@ public class CalendarActivity extends AppCompatActivity implements CalendarAdapt
         setMonthView();
     }
 
-    // 일 선택
+    // 월 단위 캘린더에서 일 선택
     @Override
     public void onItemClick(int position, LocalDate date) {
         if(date != null) {
@@ -69,6 +68,7 @@ public class CalendarActivity extends AppCompatActivity implements CalendarAdapt
         }
     }
 
+    // '일정 확인' 버튼 클릭 시 주 단위 캘린더로 이동
     public void weeklyAction(View view) {
         startActivity(new Intent(this, CalendarWeekViewActivity.class));
     }
