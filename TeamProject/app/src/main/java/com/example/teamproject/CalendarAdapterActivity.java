@@ -8,8 +8,13 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class CalendarAdapterActivity extends RecyclerView.Adapter<CalendarViewHolderActivity> {
 
@@ -45,7 +50,13 @@ public class CalendarAdapterActivity extends RecyclerView.Adapter<CalendarViewHo
             holder.dayOfMonth.setText("");
         } else {
             holder.dayOfMonth.setText(String.valueOf(date.getDayOfMonth()));
-            if(date.equals(CalendarUtilsActivity.selectedDate)) {
+            for(int i=0 ; i< CalendarActivity.filesName.length ; i++) {
+                if(date.toString().equals(CalendarActivity.filesName[i].substring(0, 10))) {
+
+                    holder.dayOfMonth.setTextColor(Color.GREEN);
+                }
+            }
+            if (date.equals(CalendarUtilsActivity.selectedDate)) {
                 holder.parentView.setBackgroundColor(Color.LTGRAY);
             }
         }
