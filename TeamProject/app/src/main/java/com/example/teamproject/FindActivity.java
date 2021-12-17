@@ -3,6 +3,7 @@ package com.example.teamproject;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -17,14 +18,9 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class FindActivity extends AppCompatActivity implements View.OnClickListener{
-    private static final String TAG = "FindActivity";
-
-    //define view objects
     private EditText editTextUserEmail;
     private Button buttonFind;
-    private TextView textviewMessage;
     private ProgressDialog progressDialog;
-    //define firebase object
     private FirebaseAuth firebaseAuth;
 
     TextView textviewLogin;
@@ -36,7 +32,7 @@ public class FindActivity extends AppCompatActivity implements View.OnClickListe
 
         editTextUserEmail = (EditText) findViewById(R.id.editTextUserEmail);
         buttonFind = (Button) findViewById(R.id.buttonFind);
-        textviewLogin= (TextView) findViewById(R.id.textViewLogin);
+        textviewLogin = (TextView) findViewById(R.id.textViewLogin);
         progressDialog = new ProgressDialog(this);
         firebaseAuth = FirebaseAuth.getInstance();
 
@@ -48,10 +44,15 @@ public class FindActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View view) {
         if(view == buttonFind){
+            String emailAddress = editTextUserEmail.getText().toString().trim();
+            if(TextUtils.isEmpty(emailAddress)){
+                Toast.makeText(this, "Email을 입력해 주세요.", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
             progressDialog.setMessage("처리중입니다. 잠시 기다려 주세요...");
             progressDialog.show();
             //비밀번호 재설정 이메일 보내기
-            String emailAddress = editTextUserEmail.getText().toString().trim();
             firebaseAuth.sendPasswordResetEmail(emailAddress)
                     .addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
@@ -60,9 +61,8 @@ public class FindActivity extends AppCompatActivity implements View.OnClickListe
                                 Toast.makeText(FindActivity.this, "이메일을 보냈습니다.", Toast.LENGTH_LONG).show();
                                 finish();
                                 startActivity(new Intent(getApplicationContext(), LoginActivity.class));
-                            } else {
-                                Toast.makeText(FindActivity.this, "메일 보내기 실패!", Toast.LENGTH_LONG).show();
                             }
+                            else Toast.makeText(FindActivity.this, "메일 보내기 실패!", Toast.LENGTH_LONG).show();
                             progressDialog.dismiss();
                         }
                     });
