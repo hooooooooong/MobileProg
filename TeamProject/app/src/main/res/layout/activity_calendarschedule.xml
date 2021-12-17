@@ -126,7 +126,7 @@
         android:ems="10"
         android:hint="서울숲"
         android:inputType="text"
-        android:maxLength="10"
+        android:maxLength="20"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
