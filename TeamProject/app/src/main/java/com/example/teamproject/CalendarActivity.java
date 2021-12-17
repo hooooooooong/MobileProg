@@ -25,6 +25,7 @@ public class CalendarActivity extends AppCompatActivity implements CalendarAdapt
     // 초기 설정
     private TextView monthYearText;
     private RecyclerView calendarRecyclerView;
+    public static String[] filesName;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,6 +44,7 @@ public class CalendarActivity extends AppCompatActivity implements CalendarAdapt
         monthYearText.setText(monthYearFromDate(CalendarUtilsActivity.selectedDate));
         ArrayList<LocalDate> daysInMonth = daysInMonthArray(CalendarUtilsActivity.selectedDate);
 
+        readFile();
         CalendarAdapterActivity calendarAdapterActivity = new CalendarAdapterActivity(daysInMonth, this);
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getApplicationContext(), 7);
         calendarRecyclerView.setLayoutManager(layoutManager);
@@ -71,5 +73,9 @@ public class CalendarActivity extends AppCompatActivity implements CalendarAdapt
     // '일정 확인' 버튼 클릭 시 주 단위 캘린더로 이동
     public void weeklyAction(View view) {
         startActivity(new Intent(this, CalendarWeekViewActivity.class));
+    }
+
+    public void readFile() {
+        filesName = fileList();
     }
 }

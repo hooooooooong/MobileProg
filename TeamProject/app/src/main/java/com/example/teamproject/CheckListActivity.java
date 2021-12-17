@@ -165,6 +165,7 @@ public class CheckListActivity extends AppCompatActivity {
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
     }
+    //test
 
     public void fileWrite(String fileName ,String toWrite){
         //파일 쓰기

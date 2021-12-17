@@ -3,21 +3,33 @@ package com.example.teamproject;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.InputFilter;
 import android.text.Spanned;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RatingBar;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.regex.Pattern;
 
 public class RatingActivity extends AppCompatActivity {
@@ -30,6 +42,7 @@ public class RatingActivity extends AppCompatActivity {
     long now;
     Date mDate;
     SimpleDateFormat mFormat = new SimpleDateFormat("MM-dd-EE");
+    DatabaseReference mDatabase;
 
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -39,6 +52,7 @@ public class RatingActivity extends AppCompatActivity {
         cancel = findViewById(R.id.cancelRating);
         ratingBar = findViewById(R.id.rating);
         review = findViewById(R.id.review);
+        mDatabase = FirebaseDatabase.getInstance().getReference();
 
         Intent getName = getIntent();
         name = getName.getStringExtra("destination");
@@ -64,8 +78,7 @@ public class RatingActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if(ratingBar.getRating() > 0.0 && review.getText().length() > 0){
                     finish();
-                    SaveRating();
-                    SaveReview();
+                    SaveReviews();
                     Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -85,31 +98,11 @@ public class RatingActivity extends AppCompatActivity {
         });
     }
 
-    void SaveRating(){ //평점 파일 저장
-        String fn = name + " rating";
-        String rating = Float.toString(ratingBar.getRating()) + '\n';
+    void SaveReviews(){
+        float rating = ratingBar.getRating();
+        String reviewText = review.getText().toString();
+        Reviews reviews = new Reviews(rating, reviewText, getDate);
 
-        try{
-            FileOutputStream fos = openFileOutput(fn, Context.MODE_APPEND);
-            fos.write(rating.getBytes());
-            fos.close();
-        }
-        catch (IOException e){
-            e.printStackTrace();
-        }
-    }
-
-    void SaveReview(){ //리뷰 파일 저장
-        String fn = name + " review";
-        String reviewText = review.getText().toString() + "//" + getDate + '\n';
-
-        try{
-            FileOutputStream fos = openFileOutput(fn, Context.MODE_APPEND);
-            fos.write(reviewText.getBytes());
-            fos.close();
-        }
-        catch (IOException e){
-            e.printStackTrace();
-        }
+        mDatabase.child("reviews").child(name).push().setValue(reviews);
     }
 }
