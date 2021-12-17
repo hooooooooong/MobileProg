@@ -1,6 +1,5 @@
 package com.example.teamproject;
 
-import static com.example.teamproject.CalendarUtilsActivity.daysInMonthArray;
 import static com.example.teamproject.CalendarUtilsActivity.daysInWeekArray;
 import static com.example.teamproject.CalendarUtilsActivity.monthYearFromDate;
 
@@ -14,7 +13,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;

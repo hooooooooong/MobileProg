@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
@@ -22,8 +21,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -71,7 +68,7 @@ public class RegionInfoActivity extends AppCompatActivity {
                 rating = 0.0d;
                 for (DataSnapshot postSnapshot: snapshot.getChildren()) {
                     keys.add(postSnapshot.getKey());
-                    while (keys.size() > 50) {
+                    while (keys.size() > 50) { //후기/평점 데이터는 50개까지 유지
                         mDatabase.child("reviews").child(name).child(keys.get(0)).setValue(null);
                         keys.remove(0);
                     }
@@ -162,7 +159,7 @@ public class RegionInfoActivity extends AppCompatActivity {
 
         urlText = txt.split("\n");
         for (String s : urlText) {
-            urls.put(s.split("-")[0], s.split("-")[1]);
+            urls.put(s.split("===")[0], s.split("===")[1]);
         }
     }
 

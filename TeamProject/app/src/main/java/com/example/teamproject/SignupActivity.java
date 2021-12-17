@@ -21,10 +21,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
-
-public class SignupActivity extends AppCompatActivity implements View.OnClickListener {
-
-    //define view objects
+public class SignupActivity extends AppCompatActivity{
     EditText editTextEmail;
     EditText editTextPassword;
     EditText editTextPassword2;
@@ -32,7 +29,6 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
     TextView textviewSignin;
     TextView textviewMessage;
     ProgressDialog progressDialog;
-    //define firebase object
     FirebaseAuth firebaseAuth;
 
     @Override
@@ -40,16 +36,13 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
 
-        //initializig firebase auth object
         firebaseAuth = FirebaseAuth.getInstance();
 
         if(firebaseAuth.getCurrentUser() != null){
-            //이미 로그인 되었다면 이 액티비티를 종료함
             finish();
-            //그리고 profile 액티비티를 연다.
-            startActivity(new Intent(getApplicationContext(), MainActivity.class)); //추가해 줄 ProfileActivity
+            startActivity(new Intent(getApplicationContext(), MainActivity.class));
         }
-        //initializing views
+
         editTextEmail = (EditText) findViewById(R.id.editTextEmail);
         editTextPassword = (EditText) findViewById(R.id.editTextPassword);
         editTextPassword2 = (EditText) findViewById(R.id.editTextPassword2);
@@ -58,9 +51,18 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
         buttonSignup = (Button) findViewById(R.id.buttonSignup);
         progressDialog = new ProgressDialog(this);
 
-        //button click event
-        buttonSignup.setOnClickListener(this);
-        textviewSignin.setOnClickListener(this);
+        buttonSignup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                registerUser();
+            }
+        });
+        textviewSignin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(SignupActivity.this, LoginActivity.class));
+            }
+        });
     }
 
     //Firebse creating a new user
@@ -98,25 +100,10 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
                         } else {
                             //에러발생시
                             textviewMessage.setText("에러유형\n - 이미 등록된 이메일  \n - 암호 최소 6자리 이상  \n - 서버에러");
-                            Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                            Toast.makeText(SignupActivity.this, "등록 에러!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "회원가입에 실패했습니다", Toast.LENGTH_LONG).show();
                         }
                         progressDialog.dismiss();
                     }
                 });
-    }
-
-    //button click event
-    @Override
-    public void onClick(View view) {
-        if(view == buttonSignup) {
-            //TODO
-            registerUser();
-        }
-
-        if(view == textviewSignin) {
-            //TODO
-            startActivity(new Intent(this, LoginActivity.class)); //추가해 줄 로그인 액티비티
-        }
     }
 }
