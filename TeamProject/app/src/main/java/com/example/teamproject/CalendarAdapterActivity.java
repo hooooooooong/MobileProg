@@ -49,9 +49,10 @@ public class CalendarAdapterActivity extends RecyclerView.Adapter<CalendarViewHo
         if(date == null) {
             holder.dayOfMonth.setText("");
         } else {
+            String[] fn = CalendarActivity.filesName;
             holder.dayOfMonth.setText(String.valueOf(date.getDayOfMonth()));
-            for(int i=0 ; i< CalendarActivity.filesName.length ; i++) {
-                if(date.toString().equals(CalendarActivity.filesName[i].substring(0, 10))) {
+            for(int i=0 ; i< fn.length ; i++) {
+                if(date.toString().equals(fn[i].substring(0, 10))) {
 
                     holder.dayOfMonth.setTextColor(Color.GREEN);
                 }
