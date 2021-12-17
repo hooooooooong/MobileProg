@@ -81,8 +81,6 @@ public class LoginActivity extends AppCompatActivity{
 
         progressDialog.setMessage("로그인중입니다. 잠시 기다려 주세요...");
         progressDialog.show();
-
-        //logging in the user
         firebaseAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
