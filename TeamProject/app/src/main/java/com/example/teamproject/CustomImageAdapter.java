@@ -10,20 +10,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
+
+import java.util.ArrayList;
+
 public class CustomImageAdapter extends BaseAdapter {
     private Context mContext;
 
     // Keep all Images in array
-    public Integer[] mThumbIds = {
-            R.drawable.seoulforest01, R.drawable.seoulforest02,
-            R.drawable.seoulforest03, R.drawable.seoulforest02,
-            R.drawable.seoulforest03, R.drawable.seoulforest02,
-            R.drawable.seoulforest03, R.drawable.seoulforest02,
-            R.drawable.seoulforest03, R.drawable.seoulforest02,
-            R.drawable.seoulforest03, R.drawable.seoulforest02,
-            R.drawable.seoulforest03, R.drawable.seoulforest02,
-            R.drawable.seoulforest03
-    };
+    ArrayList<Integer> mThumbIds = new ArrayList<>();
 
     // Constructor
     public CustomImageAdapter(Context c){
@@ -32,12 +26,12 @@ public class CustomImageAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return mThumbIds.length;
+        return mThumbIds.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return mThumbIds[position];
+        return mThumbIds.get(position);
     }
 
     @Override
@@ -48,10 +42,13 @@ public class CustomImageAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         ImageView imageView = new ImageView(mContext);
-        imageView.setImageResource(mThumbIds[position]);
+        imageView.setImageResource(mThumbIds.get(position));
         imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
         imageView.setLayoutParams(new GridView.LayoutParams(200, 200));
         return imageView;
     }
 
+    public void addImg(int resource){
+        mThumbIds.add(resource);
+    }
 }

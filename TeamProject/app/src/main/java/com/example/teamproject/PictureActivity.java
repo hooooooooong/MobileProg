@@ -40,6 +40,7 @@ public class PictureActivity extends AppCompatActivity {
                 Intent intent = new Intent(PictureActivity.this, InfoActivity.class); //전환할 액티비티
                 intent.putExtra("region", type);
                 startActivity(intent); //액티비티 전환
+                finish();
             }
         });
     }
@@ -65,7 +66,7 @@ public class PictureActivity extends AppCompatActivity {
             picture.setImageResource(R.drawable.middle_jeju);
         }
         else if(type.equals("Gyeongsang")){
-            picture.setImageResource(R.drawable.hillofthewind);
+            picture.setImageResource(R.drawable.hillofwind03);
         }
         else if(type.equals("ETC")){
             picture.setImageResource(R.drawable.dokdo);
