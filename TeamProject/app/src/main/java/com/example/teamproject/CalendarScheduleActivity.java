@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
@@ -128,12 +129,16 @@ public class CalendarScheduleActivity extends AppCompatActivity {
         String name = scheduleName.getText().toString();
         String startTime = scheduleStartTime.getText().toString();
         String endTime = scheduleEndTime.getText().toString();
-        String time = startTime + "-" + endTime;
-        //CalendarSaveScheduleActivity newSchedule = new CalendarSaveScheduleActivity(name, CalendarUtilsActivity.selectedDate, time);
-        //CalendarSaveScheduleActivity.schedulesList.add(newSchedule);
-        //finish();
-        SaveDialogFragment sdf = new SaveDialogFragment();
-        sdf.getContent(name, CalendarUtilsActivity.selectedDate, time);
-        sdf.show(getSupportFragmentManager(), "SaveDialog");
+        if(name.equals("") || startTime.equals("") || endTime.equals("")) {
+            Toast.makeText(getApplicationContext(),"모든 값을 입력해주세요", Toast.LENGTH_LONG).show();
+        } else {
+            String time = startTime + "-" + endTime;
+            //CalendarSaveScheduleActivity newSchedule = new CalendarSaveScheduleActivity(name, CalendarUtilsActivity.selectedDate, time);
+            //CalendarSaveScheduleActivity.schedulesList.add(newSchedule);
+            //finish();
+            SaveDialogFragment sdf = new SaveDialogFragment();
+            sdf.getContent(name, CalendarUtilsActivity.selectedDate, time);
+            sdf.show(getSupportFragmentManager(), "SaveDialog");
+        }
     }
 }
