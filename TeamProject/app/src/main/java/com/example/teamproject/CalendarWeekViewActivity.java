@@ -66,7 +66,8 @@ public class CalendarWeekViewActivity extends AppCompatActivity implements Calen
                             fileName = s2 + s1.substring(0, 11) + s1.substring(14, s1.length()) + ".txt";
                             getContext().deleteFile(fileName);
                             getActivity().finish();
-                            Intent intent = new Intent(getActivity(), CalendarWeekViewActivity.class);
+                            Intent intent = new Intent(getActivity(), MainActivity.class);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                             startActivity(intent);
                         }
                     })

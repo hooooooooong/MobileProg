@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -95,6 +96,9 @@ public class CalendarScheduleActivity extends AppCompatActivity {
                                 e.printStackTrace();
                             }
                             getActivity().finish();
+                            Intent intent = new Intent(getActivity(), MainActivity.class);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                            startActivity(intent);
                         }
                     })
                     .setNegativeButton("아니오", new DialogInterface.OnClickListener() {
